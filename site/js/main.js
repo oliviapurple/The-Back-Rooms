@@ -225,15 +225,16 @@
   /* ------------------------------------------------------------------ */
   /* Square booking link placeholder notice                              */
   /* ------------------------------------------------------------------ */
-  var squareLink = document.getElementById("squareBookingLink");
-  if (squareLink) {
-    squareLink.addEventListener("click", function (e) {
-      if (squareLink.getAttribute("href") === "#") {
+  var squareLinks = Array.prototype.slice.call(document.querySelectorAll(".js-square-link"));
+  squareLinks.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      if (link.getAttribute("href") === "#") {
         e.preventDefault();
+        var label = link.getAttribute("data-square-label") || "booking";
         window.alert(
-          "Online booking isn't connected yet. Once you have your Square Appointments booking link, add it to the \"Book on Square\" button in index.html."
+          "Online " + label + " isn't connected yet. Once you have the matching Square Appointments link, add it to this button's href in index.html."
         );
       }
     });
-  }
+  });
 })();
