@@ -3,525 +3,462 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Back Rooms — Barbershop &amp; Back Scratch Lounge, NYC</title>
-  <meta name="description" content="The Back Rooms is a barbershop and back scratch lounge in New York City — independent barbers and signature back scratch sessions under one roof. Open Monday–Saturday, 9am–7pm." />
-  <meta name="theme-color" content="#15120f" />
-
+  <title>The Back Rooms — Barbershop &amp; Wellness Lounge, New York</title>
+  <meta name="description" content="The Back Rooms is a barbershop and back &amp; scalp scratch lounge in New York City — independent barbers and unhurried Scratch Lounge sessions under one roof." />
+  <meta name="theme-color" content="#160d08" />
+  <script>
+    // Skip the intro on repeat views in the same tab session (set before paint to avoid a flash).
+    try { if (sessionStorage.getItem("br-intro-seen")) document.documentElement.classList.add("intro-done"); } catch (e) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
-
-  <!-- Replace with a real favicon before launch -->
-  <link rel="icon" href="data:,">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/monogram-b.svg" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <header class="site-header" id="header">
-    <div class="header-inner">
-      <a href="#home" class="logo" aria-label="The Back Rooms — home">
-        <svg class="logo-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <circle cx="24" cy="24" r="22" stroke-width="1" />
-          <path d="M16 30c2-8 4-14 8-14s6 6 8 14" stroke-width="1" stroke-linecap="round" />
-          <circle cx="24" cy="16" r="2.2" stroke-width="1" />
-        </svg>
-        <span class="logo-word">The Back <em>Rooms</em></span>
-      </a>
-
-      <nav class="main-nav" aria-label="Primary">
-        <ul>
-          <li><a href="#concept">Concept</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#memberships">Memberships</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#reviews">Reviews</a></li>
-          <li><a href="#visit">Visit</a></li>
-        </ul>
-      </nav>
-
-      <div class="header-actions">
-        <a class="btn btn-primary btn-sm" href="#book">Book Now</a>
-        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
-          <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round" /></svg>
-          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" /></svg>
-        </button>
-      </div>
+  <!-- INTRO: monogram in a brass ring, then the doors open onto the hero -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-door intro-door--left"></div>
+    <div class="intro-door intro-door--right"></div>
+    <div class="intro-mark">
+      <span class="intro-ring"></span>
+      <span class="logo-mask logo-mask--monogram intro-monogram"></span>
     </div>
+    <button class="intro-skip" type="button" tabindex="-1">Enter</button>
+  </div>
 
-    <div class="mobile-nav" id="mobileNav">
-      <ul>
-        <li><a href="#concept">Concept</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#memberships">Memberships</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#reviews">Reviews</a></li>
-        <li><a href="#visit">Visit</a></li>
-      </ul>
-      <a class="btn btn-primary" href="#book">Book Now</a>
-      <p class="mobile-nav-meta">New York, NY · Mon–Sat 9am–7pm</p>
+  <header class="site-header" id="header">
+    <a href="#home" class="header-mark" aria-label="The Back Rooms — home">
+      <span class="logo-mask logo-mask--monogram"></span>
+    </a>
+    <a href="#home" class="header-word" aria-hidden="true" tabindex="-1">
+      <span class="logo-mask logo-mask--wordmark-plain"></span>
+    </a>
+    <div class="header-actions">
+      <a class="header-book" href="#book">Book</a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="menu">
+        <span class="sr-only">Menu</span>
+        <span class="menu-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
     </div>
   </header>
+
+  <nav class="menu" id="menu" aria-label="Primary" hidden>
+    <div class="menu-inner">
+      <ul class="menu-list">
+        <li><a href="#concept">The house</a></li>
+        <li><a href="#services">Services &amp; pricing</a></li>
+        <li><a href="#barbers">Our barbers</a></li>
+        <li><a href="#memberships">Memberships</a></li>
+        <li><a href="#gallery">Inside</a></li>
+        <li><a href="#faq">Good to know</a></li>
+        <li><a href="#visit">Visit</a></li>
+      </ul>
+      <div class="menu-foot">
+        <span class="logo-mask logo-mask--stacked menu-logo" role="img" aria-label="Back Rooms Wellness Lounge"></span>
+        <p>Manhattan, New York<br />Monday to Saturday, 9am to 7pm</p>
+        <a class="btn btn-brass js-square-link" href="#" data-square-label="booking">Book a visit</a>
+      </div>
+    </div>
+  </nav>
 
   <main id="main">
 
     <!-- HERO -->
-    <section class="hero" id="home">
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <span class="eyebrow">Barbershop &amp; Back Scratch Lounge</span>
-          <h1 class="hero-title">
-            <span class="line"><span>Sharp cuts.</span></span>
-            <span class="line"><span><em>Softer</em> moments.</span></span>
-          </h1>
-          <p class="hero-sub" data-reveal>
-            A quiet corner of New York City where precision barbering meets the
-            slow, deliberate art of a back scratch — two rooms, one house,
-            built for people who take their downtime as seriously as their haircut.
-          </p>
-          <div class="hero-actions" data-reveal>
-            <a class="btn btn-primary" href="#book">Reserve a Visit</a>
-            <a class="btn btn-ghost" href="#services">View Services &amp; Pricing</a>
-          </div>
-        </div>
+    <section class="hero" id="home" data-room="cuts">
+      <div class="hero-media" aria-hidden="true">
+        <img class="hero-img hero-img--cuts is-active" src="assets/img/burl-lower.jpg" alt="" />
+        <img class="hero-img hero-img--scratch" src="assets/img/burl-sconces.jpg" alt="" />
+      </div>
+      <div class="hero-frame" aria-hidden="true"></div>
 
-        <div class="hero-meta" data-reveal>
-          <div class="hero-meta-item">
-            <div class="value">2</div>
-            <div class="label">Rituals, one house</div>
-          </div>
-          <div class="hero-meta-item">
-            <div class="value">Mon–Sat</div>
-            <div class="label">9am – 7pm</div>
-          </div>
-          <div class="hero-meta-item">
-            <div class="value">NYC</div>
-            <div class="label">New York, NY</div>
-          </div>
-          <div class="hero-meta-item">
-            <div class="value">By Appt.</div>
-            <div class="label">Walk-ins as available</div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="logo-mask logo-mask--wordmark hero-wordmark" role="img" aria-label="The Back Rooms — Wellness Lounge, New York, New York"></span>
+        </h1>
+
+        <p class="hero-line" aria-live="polite">
+          <span class="hero-line-text" data-for="cuts">A barbershop with a quiet room behind it.</span>
+          <span class="hero-line-text" data-for="scratch" hidden>Back and scalp care, slow and deliberate.</span>
+        </p>
+
+        <div class="room-switch" role="group" aria-label="Choose a room">
+          <span class="room-switch-label">Choose your room</span>
+          <div class="room-switch-track">
+            <span class="room-switch-thumb" aria-hidden="true"></span>
+            <button type="button" class="room-switch-btn" data-room="cuts" aria-pressed="true">The Barbershop</button>
+            <button type="button" class="room-switch-btn" data-room="scratch" aria-pressed="false">The Scratch Lounge</button>
           </div>
         </div>
       </div>
 
-      <div class="scroll-cue" aria-hidden="true">
-        <span class="line"></span>
-        Scroll
-      </div>
+      <a class="hero-enter" href="#concept">
+        <span>Step inside</span>
+        <span class="hero-enter-line" aria-hidden="true"></span>
+      </a>
     </section>
-
-    <!-- MARQUEE -->
-    <div class="marquee" role="presentation">
-      <div class="marquee-track" aria-hidden="true">
-        <span>Precision Cuts</span>
-        <span>Hot Towel Shaves</span>
-        <span>Back &amp; Scalp Care</span>
-        <span>Lounge Memberships</span>
-        <span>Est. New York</span>
-        <span>Precision Cuts</span>
-        <span>Hot Towel Shaves</span>
-        <span>Back &amp; Scalp Care</span>
-        <span>Lounge Memberships</span>
-        <span>Est. New York</span>
-      </div>
-    </div>
 
     <!-- CONCEPT -->
-    <section id="concept">
+    <section class="concept" id="concept">
       <div class="container">
-        <div class="section-head center" data-reveal>
-          <span class="eyebrow" style="justify-content:center">The Concept</span>
-          <h2 class="section-heading">Two rituals, <em>one house.</em></h2>
-          <p class="section-lede">
-            The Back Rooms started with a simple idea — that a great haircut and a
-            genuine moment of stillness shouldn't require two different trips
-            across the city. So we built both, side by side.
-          </p>
+        <div class="concept-intro">
+          <span class="logo-mask logo-mask--b concept-b" aria-hidden="true"></span>
+          <h2 class="heading-xl">Two rooms, one house.</h2>
+          <p class="lede">The Back Rooms started with a simple idea: a great haircut and a
+            genuine moment of stillness shouldn't take two trips across the city.
+            So we built both, side by side, and kept the lights low.</p>
         </div>
 
-        <div class="concept-grid">
-          <article class="concept-card concept-card--cuts" data-reveal>
-            <div class="concept-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
-                <circle cx="6" cy="6" r="2.5" />
-                <circle cx="6" cy="18" r="2.5" />
-                <path d="M8.5 7.5L20 18M8.5 16.5L20 6" stroke-linecap="round" />
-              </svg>
+        <div class="rooms">
+          <article class="room">
+            <figure class="room-photo">
+              <img src="assets/img/clippers.jpg" alt="Two brushed-steel trimmers engraved with the Back Rooms wordmark" loading="lazy" width="533" height="795" />
+            </figure>
+            <div class="room-body">
+              <h3 class="heading-md">The Barbershop</h3>
+              <p>Old-world barbering with a modern hand. Clean fades, straight-razor
+                shaves and beard work done with real attention, in chairs built for a
+                long, unhurried sit.</p>
+              <ul class="plain-list">
+                <li>Precision cuts and skin fades</li>
+                <li>Hot towel straight-razor shaves</li>
+                <li>Beard sculpting and grey blending</li>
+              </ul>
             </div>
-            <h3>The Barbershop</h3>
-            <p>Old-world barbering with a modern hand — clean fades, straight-razor
-              shaves, and beard work done with real attention, in chairs built for
-              a long, unhurried sit.</p>
-            <ul class="concept-list">
-              <li>Precision cuts &amp; skin fades</li>
-              <li>Hot towel straight-razor shaves</li>
-              <li>Beard sculpting &amp; grey blending</li>
-            </ul>
           </article>
 
-          <article class="concept-card concept-card--scratch" data-reveal>
-            <div class="concept-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
-                <path d="M4 14c2-6 4-9 8-9s6 3 8 9" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M6 18c1.5-1 3-1 4.5 0s3 1 4.5 0 3-1 4.5 0" stroke-linecap="round" />
-              </svg>
+          <article class="room room--flip">
+            <figure class="room-photo">
+              <img src="assets/img/towels.jpg" alt="Folded white towels embroidered with the Back Rooms monogram on a brown rug" loading="lazy" width="524" height="647" />
+            </figure>
+            <div class="room-body">
+              <h3 class="heading-md">The Scratch Lounge</h3>
+              <p>Our signature back and scalp scratch sessions. A deliberately
+                old-fashioned, deeply calming hour of attention in a dim, warm room
+                built for nothing but unwinding.</p>
+              <ul class="plain-list">
+                <li>Quick, Standard and Extended sessions</li>
+                <li>Back and scalp attention, every visit</li>
+                <li>Monthly Lounge memberships</li>
+              </ul>
             </div>
-            <h3>The Scratch Lounge</h3>
-            <p>Our signature back scratch sessions — a deliberately old-fashioned,
-              deeply calming experience performed in a dim, warm room built purely
-              for unwinding.</p>
-            <ul class="concept-list">
-              <li>Quick, Standard &amp; Extended sessions</li>
-              <li>Back &amp; scalp attention, every visit</li>
-              <li>Monthly Lounge memberships available</li>
-            </ul>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="services">
-      <div class="container">
-        <div class="section-head" data-reveal>
-          <span class="eyebrow">Services &amp; Pricing</span>
-          <h2 class="section-heading">The <em>full</em> menu.</h2>
-          <p class="section-lede">Every service is by appointment and includes a
-            few quiet minutes before and after — no one is rushed out of either room.</p>
-        </div>
+    <!-- SERVICES: printed menu card on linen -->
+    <section class="services paper" id="services">
+      <div class="container container--narrow">
+        <header class="section-head">
+          <h2 class="heading-xl">The menu</h2>
+          <p class="lede">Everything is by appointment, and every visit includes a few
+            quiet minutes before and after. No one is rushed out of either room.</p>
+        </header>
 
-        <div class="tabs" data-reveal>
+        <div class="tabs">
           <div class="tab-list" role="tablist" aria-label="Service menus">
             <button class="tab-btn" id="tab-cuts" role="tab" aria-selected="true" aria-controls="panel-cuts">Barbershop</button>
-            <button class="tab-btn" id="tab-scratch" role="tab" aria-selected="false" aria-controls="panel-scratch" tabindex="-1">Back &amp; Scalp Care</button>
+            <button class="tab-btn" id="tab-scratch" role="tab" aria-selected="false" aria-controls="panel-scratch" tabindex="-1">Back &amp; scalp</button>
           </div>
 
-          <div class="tab-panel is-active" id="panel-cuts" role="tabpanel" aria-labelledby="tab-cuts">
-            <div class="barber-panel">
-              <h3>Every chair, its own artist.</h3>
-              <p>Each barber at The Back Rooms is an independent professional
-                who sets their own pricing, specialties, and availability.
-                Get to know who's behind the chair, then book directly with
-                the barber who's right for you — rates and scheduling are
-                handled individually through Square.</p>
-              <div class="btn-row">
-                <a class="btn btn-ghost" href="#barbers">Meet Our Barbers</a>
-                <a class="btn btn-primary js-square-link" href="#" data-square-label="barber booking">Book With Our Barbers</a>
-              </div>
+          <div class="tab-panel" id="panel-cuts" role="tabpanel" aria-labelledby="tab-cuts">
+            <h3 class="heading-md">Every chair, its own artist.</h3>
+            <p>Each barber at The Back Rooms is an independent professional who sets
+              their own pricing, specialties and availability. Get to know who's behind
+              the chair, then book directly with the barber who suits you. Rates and
+              scheduling are handled individually through Square.</p>
+            <div class="btn-row">
+              <a class="btn btn-ink js-square-link" href="#" data-square-label="barber booking">Book with a barber</a>
+              <a class="btn btn-line" href="#barbers">Meet the barbers</a>
             </div>
           </div>
 
           <div class="tab-panel" id="panel-scratch" role="tabpanel" aria-labelledby="tab-scratch" hidden>
-            <div class="menu-list">
-              <div class="menu-item">
-                <div>
-                  <div class="menu-item-name">Quick Session</div>
-                  <p class="menu-item-desc">A focused reset for your back and scalp when time is short.</p>
-                  <div class="menu-item-duration">15 min</div>
-                </div>
-                <div class="menu-item-price">$35</div>
+            <dl class="price-list">
+              <div class="price-row">
+                <dt>Quick Session <span class="price-time">15 min</span></dt>
+                <dd class="price-amt">$35</dd>
+                <dd class="price-desc">A focused reset for your back and scalp when time is short.</dd>
               </div>
-              <div class="menu-item">
-                <div>
-                  <div class="menu-item-name">Standard Session</div>
-                  <p class="menu-item-desc">Our most popular session — full back and scalp attention at an easy pace.</p>
-                  <div class="menu-item-duration">30 min</div>
-                </div>
-                <div class="menu-item-price">$60</div>
+              <div class="price-row">
+                <dt>Standard Session <span class="price-time">30 min</span></dt>
+                <dd class="price-amt">$60</dd>
+                <dd class="price-desc">Our most-booked session: full back and scalp attention at an easy pace.</dd>
               </div>
-              <div class="menu-item">
-                <div>
-                  <div class="menu-item-name">Extended Session</div>
-                  <p class="menu-item-desc">The complete Scratch Lounge experience, unhurried from start to finish.</p>
-                  <div class="menu-item-duration">45 min</div>
-                </div>
-                <div class="menu-item-price">$85</div>
+              <div class="price-row">
+                <dt>Extended Session <span class="price-time">45 min</span></dt>
+                <dd class="price-amt">$85</dd>
+                <dd class="price-desc">The complete Scratch Lounge experience, unhurried from start to finish.</dd>
               </div>
+            </dl>
+            <p class="small-note">Coming often? A <a href="#memberships">Lounge membership</a> costs less than booking each visit.</p>
+            <div class="btn-row">
+              <a class="btn btn-ink js-square-link" href="#" data-square-label="Scratch Lounge booking">Book a session</a>
             </div>
-            <p class="menu-note">Visiting often? See our monthly
-              <a href="#memberships">Lounge Memberships</a> for meaningful
-              savings over drop-in pricing.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- BARBERS -->
-    <section id="barbers" class="services">
+    <section class="barbers" id="barbers">
       <div class="container">
-        <div class="section-head center" data-reveal>
-          <span class="eyebrow" style="justify-content:center">Our Barbers</span>
-          <h2 class="section-heading">Meet the <em>chairs.</em></h2>
-          <p class="section-lede">Full profiles, specialties, and individual
-            booking links are on their way. In the meantime, book with any of
-            our barbers directly through Square — their specialties, rates,
-            and availability are all shown there.</p>
-        </div>
-
-        <div class="barbers-panel" data-reveal>
-          <p>Barber bios coming soon.</p>
-          <div class="btn-row" style="justify-content:center;">
-            <a class="btn btn-primary js-square-link" href="#" data-square-label="barber booking">Book With Our Barbers</a>
+        <div class="barbers-grid">
+          <div>
+            <h2 class="heading-xl">Meet the chairs</h2>
+            <p class="lede">Full profiles, specialties and individual booking links are on
+              their way. Until then, you can book any of our barbers through Square, where
+              each one's rates and availability are listed.</p>
+            <a class="btn btn-brass js-square-link" href="#" data-square-label="barber booking">Book with a barber</a>
           </div>
+          <ul class="chair-list" aria-label="Barber profiles (coming soon)">
+            <li class="chair"><span class="chair-name">Barber profile</span><span class="chair-note">Coming soon</span></li>
+            <li class="chair"><span class="chair-name">Barber profile</span><span class="chair-note">Coming soon</span></li>
+            <li class="chair"><span class="chair-name">Barber profile</span><span class="chair-note">Coming soon</span></li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- MEMBERSHIPS -->
-    <section id="memberships">
+    <!-- MEMBERSHIPS: brass key tags -->
+    <section class="memberships" id="memberships">
       <div class="container">
-        <div class="section-head center" data-reveal>
-          <span class="eyebrow" style="justify-content:center">Lounge Memberships</span>
-          <h2 class="section-heading">Make it <em>a habit.</em></h2>
-          <p class="section-lede">Monthly plans for guests who want the
-            Scratch Lounge as a standing appointment, at meaningful savings
-            over drop-in pricing.</p>
-        </div>
+        <header class="section-head section-head--center">
+          <h2 class="heading-xl">Keep a key</h2>
+          <p class="lede">Monthly plans for guests who want the Scratch Lounge as a standing
+            appointment, for less than booking each visit.</p>
+        </header>
 
-        <div class="membership-grid" data-reveal>
-          <div class="membership-card">
-            <span class="eyebrow">Tier 1</span>
-            <div class="membership-price">$99<span>/mo</span></div>
-            <ul class="concept-list">
+        <div class="tag-grid">
+          <article class="key-tag">
+            <span class="key-tag-hole" aria-hidden="true"></span>
+            <h3 class="key-tag-name">Tier 1</h3>
+            <p class="key-tag-price">$99<span>/month</span></p>
+            <ul class="plain-list">
               <li>2 Standard Sessions (30 min) each month</li>
             </ul>
-            <p class="membership-value">A $120 value</p>
-            <a class="btn btn-ghost js-square-link" href="#" data-square-label="Tier 1 membership">Join Tier 1</a>
-          </div>
+            <p class="key-tag-value">$120 of sessions</p>
+            <a class="btn btn-line-light js-square-link" href="#" data-square-label="Tier 1 membership">Join Tier 1</a>
+          </article>
 
-          <div class="membership-card">
-            <span class="eyebrow">Tier 2</span>
-            <div class="membership-price">$149<span>/mo</span></div>
-            <ul class="concept-list">
+          <article class="key-tag key-tag--brass">
+            <span class="key-tag-hole" aria-hidden="true"></span>
+            <h3 class="key-tag-name">Tier 2</h3>
+            <p class="key-tag-price">$149<span>/month</span></p>
+            <ul class="plain-list">
               <li>1 Extended Session (45 min) each month</li>
               <li>2 Quick Sessions (15 min) each month</li>
             </ul>
-            <p class="membership-value">A $155 value</p>
-            <a class="btn btn-ghost js-square-link" href="#" data-square-label="Tier 2 membership">Join Tier 2</a>
-          </div>
+            <p class="key-tag-value">$155 of sessions</p>
+            <a class="btn btn-ink js-square-link" href="#" data-square-label="Tier 2 membership">Join Tier 2</a>
+          </article>
 
-          <div class="membership-card">
-            <span class="eyebrow">Tier 3</span>
-            <div class="membership-price">$249<span>/mo</span></div>
-            <ul class="concept-list">
+          <article class="key-tag">
+            <span class="key-tag-hole" aria-hidden="true"></span>
+            <h3 class="key-tag-name">Tier 3</h3>
+            <p class="key-tag-price">$249<span>/month</span></p>
+            <ul class="plain-list">
               <li>4 Extended Sessions (45 min) each month</li>
               <li>Priority booking</li>
               <li>Split any one 45-minute session into two</li>
             </ul>
-            <p class="membership-value">A $340 value</p>
-            <a class="btn btn-ghost js-square-link" href="#" data-square-label="Tier 3 membership">Join Tier 3</a>
-          </div>
+            <p class="key-tag-value">$340 of sessions</p>
+            <a class="btn btn-line-light js-square-link" href="#" data-square-label="Tier 3 membership">Join Tier 3</a>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- GALLERY -->
-    <section id="gallery">
+    <section class="gallery" id="gallery">
       <div class="container">
-        <div class="section-head center" data-reveal>
-          <span class="eyebrow" style="justify-content:center">Inside The Back Rooms</span>
-          <h2 class="section-heading">A look <em>inside.</em></h2>
-          <p class="section-lede">Real photography of the space and both rooms is
-            coming soon — these tiles are placeholders reserved for your gallery.</p>
-        </div>
-
-        <div class="gallery-grid" data-reveal>
-          <div class="gallery-item" role="img" aria-label="Placeholder — barber chairs along the front room"><span>Front Room</span></div>
-          <div class="gallery-item" role="img" aria-label="Placeholder — hot towel shave in progress"><span>Hot Towel Shave</span></div>
-          <div class="gallery-item" role="img" aria-label="Placeholder — back scratch lounge seating"><span>Scratch Lounge</span></div>
-          <div class="gallery-item" role="img" aria-label="Placeholder — detail of grooming tools"><span>The Details</span></div>
-          <div class="gallery-item" role="img" aria-label="Placeholder — finished skin fade"><span>Fresh Fade</span></div>
-          <div class="gallery-item" role="img" aria-label="Placeholder — extended back scratch session"><span>Extended Session</span></div>
+        <header class="section-head">
+          <h2 class="heading-xl">Inside the house</h2>
+          <p class="lede">Walnut, brass, leather and linen. Photos of the finished rooms are coming soon.</p>
+        </header>
+        <div class="gallery-grid">
+          <figure class="g g--tall"><img src="assets/img/burl-sconces.jpg" alt="Burl walnut wall panels lit by ribbed glass sconces" loading="lazy" /></figure>
+          <figure class="g"><img src="assets/img/key-fob.jpg" alt="Brass key tag engraved with the Back Rooms monogram, in a black box" loading="lazy" /></figure>
+          <figure class="g"><img src="assets/img/door-hanger.jpg" alt="Brown leather door hanger with the monogram on a brass handle" loading="lazy" /></figure>
+          <figure class="g"><img src="assets/img/leather.jpg" alt="Monogram debossed into worn brown leather" loading="lazy" /></figure>
+          <figure class="g g--wide"><img src="assets/img/embossed-wood.jpg" alt="Back Rooms wordmark debossed into a dark wood surface" loading="lazy" /></figure>
+          <figure class="g"><img src="assets/img/checker-card.jpg" alt="Chocolate card with a checkered border and the stacked Back Rooms wordmark" loading="lazy" /></figure>
         </div>
       </div>
     </section>
 
     <!-- REVIEWS -->
-    <section id="reviews" class="reviews">
+    <section class="reviews paper" id="reviews">
       <div class="container container--narrow">
-        <div class="section-head center" data-reveal>
-          <span class="eyebrow" style="justify-content:center">Reviews</span>
-          <h2 class="section-heading">What guests <em>say.</em></h2>
-        </div>
-
-        <div class="review-carousel" data-reveal
-          role="region" aria-roledescription="carousel" aria-label="Guest reviews">
-          <div class="review-track" id="reviewTrack">
-            <div class="review-slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 3">
-              <p class="review-quote">"I came in for a fade and left having genuinely
-                forgotten I had a phone. The back scratch room is not a gimmick —
-                it's the best fifteen minutes of my week."</p>
-              <p class="review-author">Daniel R.</p>
-              <p class="review-role">Regular, Cut + Quick Session</p>
-            </div>
-            <div class="review-slide" role="group" aria-roledescription="slide" aria-label="2 of 3" hidden>
-              <p class="review-quote">"I signed up for a membership after my
-                first visit and haven't looked back — it's become my Tuesday
-                reset."</p>
-              <p class="review-author">Priya M.</p>
-              <p class="review-role">Tier 2 Lounge Member</p>
-            </div>
-            <div class="review-slide" role="group" aria-roledescription="slide" aria-label="3 of 3" hidden>
-              <p class="review-quote">"Best hot towel shave I've had in the city,
-                full stop. The whole space feels like it was designed by someone
-                who actually sits in the chair."</p>
-              <p class="review-author">Marcus T.</p>
-              <p class="review-role">Hot Towel Straight-Razor Shave</p>
-            </div>
+        <div class="review-carousel" role="region" aria-roledescription="carousel" aria-label="Guest reviews">
+          <span class="logo-mask logo-mask--monogram review-mark" aria-hidden="true"></span>
+          <div class="review-track">
+            <figure class="review-slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 3">
+              <blockquote>I came in for a fade and left having genuinely forgotten I had a phone.
+                The scratch room is not a gimmick. It's the best fifteen minutes of my week.</blockquote>
+              <figcaption>Daniel R., cut and Quick Session</figcaption>
+            </figure>
+            <figure class="review-slide" role="group" aria-roledescription="slide" aria-label="2 of 3" hidden>
+              <blockquote>I signed up for a membership after my first visit and haven't looked
+                back. It's become my Tuesday reset.</blockquote>
+              <figcaption>Priya M., Tier 2 member</figcaption>
+            </figure>
+            <figure class="review-slide" role="group" aria-roledescription="slide" aria-label="3 of 3" hidden>
+              <blockquote>Best hot towel shave I've had in the city, full stop. The whole space
+                feels like it was designed by someone who actually sits in the chair.</blockquote>
+              <figcaption>Marcus T., hot towel straight-razor shave</figcaption>
+            </figure>
           </div>
-
           <div class="review-controls">
-            <button class="review-arrow" id="reviewPrev" aria-label="Previous review">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <button class="review-arrow" id="reviewPrev" type="button" aria-label="Previous review">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </button>
-            <div class="review-dots" id="reviewDots" role="tablist" aria-label="Choose review"></div>
-            <button class="review-arrow" id="reviewNext" aria-label="Next review">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <div class="review-dots" id="reviewDots"></div>
+            <button class="review-arrow" id="reviewNext" type="button" aria-label="Next review">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ / ETIQUETTE -->
+    <section class="faq" id="faq">
+      <div class="container">
+        <div class="faq-grid">
+          <header class="section-head">
+            <h2 class="heading-xl">Good to know</h2>
+            <p class="lede">A few house customs, and answers to what new guests usually ask.</p>
+          </header>
+
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>What happens in a Scratch Lounge session?</summary>
+              <div class="faq-answer">
+                <p>You settle into a reclined lounge chair in a dim, quiet room, fully clothed.
+                  Your host spends the session on light, slow scratching across your back and
+                  scalp, adjusting pressure to whatever you prefer. There's no oil and nothing
+                  to change into. Just tell us what feels good.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Is this massage or therapy?</summary>
+              <div class="faq-answer">
+                <p>No. Our Lounge hosts are not licensed massage therapists, and sessions are
+                  not medical or therapeutic treatment. Think of it as a calm, old-fashioned
+                  moment of attention. If you have a skin condition or recent injury, let us
+                  know when you book.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Do you take walk-ins?</summary>
+              <div class="faq-answer">
+                <p>We work by appointment so nobody waits. If a chair or the Lounge is open,
+                  we're happy to fit you in, but booking ahead is the only way to guarantee a
+                  time.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>What if I'm running late or need to cancel?</summary>
+              <div class="faq-answer">
+                <p>Please give us at least 24 hours' notice to cancel or move an appointment.
+                  If you're more than 10 minutes late, we may need to shorten your session so
+                  the next guest isn't kept waiting.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>How do memberships work?</summary>
+              <div class="faq-answer">
+                <p>Memberships renew monthly through Square, and your sessions reset at the
+                  start of each billing month. Tier 3 members get priority booking and can
+                  split one 45-minute session into two shorter visits.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Can I book a cut and a session together?</summary>
+              <div class="faq-answer">
+                <p>Yes, and many guests do. Book your barber and your Lounge session back to
+                  back and we'll keep the handover between rooms seamless.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>House customs</summary>
+              <div class="faq-answer">
+                <ul class="plain-list">
+                  <li>Phones on silent in the Scratch Lounge.</li>
+                  <li>Keep voices low past the front room.</li>
+                  <li>Arrive five minutes early to settle in.</li>
+                  <li>Gratuity for barbers and hosts is appreciated, never expected.</li>
+                </ul>
+              </div>
+            </details>
           </div>
         </div>
       </div>
     </section>
 
     <!-- VISIT -->
-    <section id="visit">
+    <section class="visit paper" id="visit">
       <div class="container">
-        <div class="section-head" data-reveal>
-          <span class="eyebrow">Visit</span>
-          <h2 class="section-heading">Find <em>the house.</em></h2>
-        </div>
-
         <div class="visit-grid">
-          <div class="visit-map" data-reveal aria-hidden="true">
-            <div class="visit-pin">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-7-7.2-7-12a7 7 0 1 1 14 0c0 4.8-7 12-7 12z" stroke-linejoin="round" /><circle cx="12" cy="9" r="2.5" /></svg>
-              <span>The Back Rooms</span>
+          <header class="section-head">
+            <h2 class="heading-xl">Find the house</h2>
+            <p class="lede">We're settling into our Manhattan address now. The exact
+              location, phone number and email will be posted here before opening.</p>
+          </header>
+          <dl class="visit-details">
+            <div>
+              <dt>Where</dt>
+              <dd>Manhattan, New York<br /><span class="muted">Full address coming soon</span></dd>
             </div>
-          </div>
-
-          <div class="visit-details" data-reveal>
-            <div class="visit-row">
-              <div class="visit-row-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-7-7.2-7-12a7 7 0 1 1 14 0c0 4.8-7 12-7 12z" stroke-linejoin="round" /><circle cx="12" cy="9" r="2.5" /></svg>
-              </div>
-              <div>
-                <h4>Address</h4>
-                <p>New York, NY<br /><span style="color:var(--color-text-faint); font-size:0.85rem;">(exact address to come)</span></p>
-              </div>
+            <div>
+              <dt>Hours</dt>
+              <dd>Monday to Saturday, 9am to 7pm<br />Closed Sundays</dd>
             </div>
-
-            <div class="visit-row">
-              <div class="visit-row-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </div>
-              <div>
-                <h4>Hours</h4>
-                <div class="hours-table">
-                  <span>Mon – Sat</span><span>9:00 AM – 7:00 PM</span>
-                  <span>Sunday</span><span>Closed</span>
-                </div>
-              </div>
+            <div>
+              <dt>Get in touch</dt>
+              <dd><span class="muted">Phone and email coming soon. For now, the quickest way to reach us is to book online.</span></dd>
             </div>
-
-            <div class="visit-row">
-              <div class="visit-row-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><path d="M4 5h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 14l5 2v4a2 2 0 0 1-2 2C9.7 22 2 14.3 2 6a2 2 0 0 1 2-2z" stroke-linejoin="round" /></svg>
-              </div>
-              <div>
-                <h4>Phone &amp; Email</h4>
-                <p><a href="tel:+12125550000">(212) 555-0000</a><br /><a href="mailto:hello@thebackroomsnyc.com">hello@thebackroomsnyc.com</a></p>
-              </div>
-            </div>
-          </div>
+          </dl>
         </div>
       </div>
     </section>
 
-    <!-- BOOK CTA -->
-    <section id="book" class="book-cta">
-      <div class="container">
-        <div class="book-cta-panel" data-reveal>
-          <span class="eyebrow" style="justify-content:center">Reserve Your Ritual</span>
-          <h2 class="section-heading">Ready when <em>you</em> are.</h2>
-          <p class="section-lede" style="margin-inline:auto; text-align:center;">
-            Book online through Square, or reach out directly and we'll get you
-            on the books.
-          </p>
-          <div class="book-cta-actions">
-            <!--
-              Square booking link:
-              Replace href="#" below with your Square Appointments booking page URL
-              (e.g. https://book.squareup.com/appointments/your-booking-id)
-              once it's available.
-            -->
-            <a class="btn btn-primary js-square-link" href="#" data-square-label="booking">Book on Square</a>
-            <a class="btn btn-ghost" href="tel:+12125550000">Call to Book</a>
-          </div>
-          <p class="book-cta-note">Online booking link goes live once connected to Square.</p>
+    <!-- BOOK -->
+    <section class="book" id="book">
+      <img class="book-bg" src="assets/img/burl-sconces.jpg" alt="" aria-hidden="true" loading="lazy" />
+      <div class="container container--narrow book-inner">
+        <span class="logo-mask logo-mask--monogram book-mark" aria-hidden="true"></span>
+        <h2 class="heading-xl">Your room is ready</h2>
+        <p class="lede">Book a chair, a Lounge session or both through Square.</p>
+        <div class="btn-row btn-row--center">
+          <a class="btn btn-brass js-square-link" href="#" data-square-label="booking">Book a visit</a>
+          <a class="btn btn-line-light" href="#memberships">See memberships</a>
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="site-footer">
     <div class="container">
       <div class="footer-top">
-        <div class="footer-brand">
-          <a href="#home" class="logo" aria-label="The Back Rooms — home">
-            <svg class="logo-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-              <circle cx="24" cy="24" r="22" stroke-width="1" />
-              <path d="M16 30c2-8 4-14 8-14s6 6 8 14" stroke-width="1" stroke-linecap="round" />
-              <circle cx="24" cy="16" r="2.2" stroke-width="1" />
-            </svg>
-            <span class="logo-word">The Back <em>Rooms</em></span>
-          </a>
-          <p>Barbershop &amp; back scratch lounge in New York City.
-            Two experiences, one house.</p>
-          <div class="footer-social">
-            <a href="#" aria-label="The Back Rooms on Instagram">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" /></svg>
-            </a>
-            <a href="#" aria-label="The Back Rooms on Google Maps">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-7-7.2-7-12a7 7 0 1 1 14 0c0 4.8-7 12-7 12z" stroke-linejoin="round" /><circle cx="12" cy="9" r="2.5" /></svg>
-            </a>
-          </div>
-        </div>
-
-        <div class="footer-cols">
-          <div class="footer-col">
-            <h5>Explore</h5>
-            <ul>
-              <li><a href="#concept">Concept</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#memberships">Memberships</a></li>
-              <li><a href="#gallery">Gallery</a></li>
-              <li><a href="#reviews">Reviews</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h5>Visit</h5>
-            <ul>
-              <li><a href="#visit">New York, NY</a></li>
-              <li><a href="#visit">Mon–Sat, 9am–7pm</a></li>
-              <li><a href="tel:+12125550000">(212) 555-0000</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h5>Book</h5>
-            <ul>
-              <li><a href="#book">Reserve a visit</a></li>
-              <li><a href="mailto:hello@thebackroomsnyc.com">Email us</a></li>
-            </ul>
-          </div>
-        </div>
+        <span class="logo-mask logo-mask--stacked footer-logo" role="img" aria-label="Back Rooms Wellness Lounge"></span>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="#concept">The house</a>
+          <a href="#services">Services</a>
+          <a href="#memberships">Memberships</a>
+          <a href="#faq">Good to know</a>
+          <a href="#visit">Visit</a>
+          <a href="#book">Book</a>
+        </nav>
       </div>
-
       <div class="footer-bottom">
-        <span>© <span id="year"></span> The Back Rooms. All rights reserved.</span>
-        <span>New York, NY</span>
+        <span>&copy; <span id="year"></span> The Back Rooms</span>
+        <span>Manhattan, New York</span>
       </div>
     </div>
   </footer>

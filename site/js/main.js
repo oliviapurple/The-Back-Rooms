@@ -2,88 +2,121 @@
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var root = document.documentElement;
+  var body = document.body;
+
+  /* ------------------------------------------------------------------ */
+  /* Intro — monogram, then the doors open onto the hero                 */
+  /* ------------------------------------------------------------------ */
+  var intro = document.getElementById("intro");
+  var INTRO_HOLD_MS = reduceMotion ? 600 : 2300;
+  var DOOR_MS = reduceMotion ? 10 : 1400;
+
+  function openIntro() {
+    if (!intro || intro.classList.contains("is-opening")) return;
+    intro.classList.add("is-opening");
+    body.classList.add("intro-open");
+    try { sessionStorage.setItem("br-intro-seen", "1"); } catch (e) {}
+    window.setTimeout(function () {
+      root.classList.add("intro-done");
+    }, DOOR_MS);
+  }
+
+  if (root.classList.contains("intro-done")) {
+    body.classList.add("intro-open");
+  } else if (intro) {
+    var introTimer = window.setTimeout(openIntro, INTRO_HOLD_MS);
+    intro.addEventListener("click", function () {
+      window.clearTimeout(introTimer);
+      openIntro();
+    });
+    document.addEventListener("keydown", function onKey() {
+      window.clearTimeout(introTimer);
+      openIntro();
+      document.removeEventListener("keydown", onKey);
+    });
+  }
 
   /* ------------------------------------------------------------------ */
   /* Header scroll state                                                 */
   /* ------------------------------------------------------------------ */
   var header = document.getElementById("header");
   function onScroll() {
-    if (window.scrollY > 12) {
-      header.classList.add("is-scrolled");
-    } else {
-      header.classList.remove("is-scrolled");
-    }
+    header.classList.toggle("is-scrolled", window.scrollY > window.innerHeight * 0.6);
   }
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
   /* ------------------------------------------------------------------ */
-  /* Mobile nav                                                          */
+  /* Full-screen menu                                                    */
   /* ------------------------------------------------------------------ */
-  var navToggle = document.getElementById("navToggle");
-  var mobileNav = document.getElementById("mobileNav");
+  var menuToggle = document.getElementById("menuToggle");
+  var menu = document.getElementById("menu");
 
-  function closeMobileNav() {
-    mobileNav.classList.remove("is-open");
-    navToggle.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = "";
-  }
-
-  function openMobileNav() {
-    mobileNav.classList.add("is-open");
-    navToggle.setAttribute("aria-expanded", "true");
-    document.body.style.overflow = "hidden";
-  }
-
-  navToggle.addEventListener("click", function () {
-    var isOpen = navToggle.getAttribute("aria-expanded") === "true";
-    if (isOpen) {
-      closeMobileNav();
+  function setMenu(open) {
+    menuToggle.setAttribute("aria-expanded", String(open));
+    menuToggle.querySelector(".sr-only").textContent = open ? "Close menu" : "Menu";
+    body.classList.toggle("is-locked", open);
+    if (open) {
+      menu.hidden = false;
+      void menu.offsetWidth;
+      menu.classList.add("is-open");
+      var first = menu.querySelector("a");
+      if (first) first.focus();
     } else {
-      openMobileNav();
+      menu.classList.remove("is-open");
+      window.setTimeout(function () {
+        if (!menu.classList.contains("is-open")) menu.hidden = true;
+      }, reduceMotion ? 0 : 450);
     }
+  }
+
+  menuToggle.addEventListener("click", function () {
+    setMenu(menuToggle.getAttribute("aria-expanded") !== "true");
   });
 
-  mobileNav.querySelectorAll("a").forEach(function (link) {
-    link.addEventListener("click", closeMobileNav);
+  menu.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () { setMenu(false); });
   });
 
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") {
-      closeMobileNav();
+    if (e.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
+      setMenu(false);
+      menuToggle.focus();
+    }
+    // Keep focus inside the open menu (toggle + menu links)
+    if (e.key === "Tab" && menuToggle.getAttribute("aria-expanded") === "true") {
+      var items = [menuToggle].concat(Array.prototype.slice.call(menu.querySelectorAll("a")));
+      var i = items.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0) { e.preventDefault(); items[items.length - 1].focus(); }
+      else if (!e.shiftKey && i === items.length - 1) { e.preventDefault(); items[0].focus(); }
     }
   });
 
   /* ------------------------------------------------------------------ */
-  /* Scroll reveal                                                       */
+  /* Hero room switch — swaps photo and line, and the menu tab below     */
   /* ------------------------------------------------------------------ */
-  var revealEls = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+  var hero = document.getElementById("home");
+  var roomButtons = Array.prototype.slice.call(document.querySelectorAll(".room-switch-btn"));
 
-  if (reduceMotion || !("IntersectionObserver" in window)) {
-    revealEls.forEach(function (el) {
-      el.classList.add("is-visible");
+  function setRoom(room) {
+    hero.setAttribute("data-room", room);
+    roomButtons.forEach(function (btn) {
+      btn.setAttribute("aria-pressed", String(btn.getAttribute("data-room") === room));
     });
-  } else {
-    revealEls.forEach(function (el, i) {
-      el.style.setProperty("--reveal-delay", (i % 4) * 90 + "ms");
+    hero.querySelectorAll(".hero-img").forEach(function (img) {
+      img.classList.toggle("is-active", img.classList.contains("hero-img--" + room));
     });
-
-    var revealObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
-    );
-
-    revealEls.forEach(function (el) {
-      revealObserver.observe(el);
+    hero.querySelectorAll(".hero-line-text").forEach(function (line) {
+      line.hidden = line.getAttribute("data-for") !== room;
     });
+    var tab = document.getElementById("tab-" + room);
+    if (tab) activateTab(tab);
   }
+
+  roomButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () { setRoom(btn.getAttribute("data-room")); });
+  });
 
   /* ------------------------------------------------------------------ */
   /* Service tabs                                                        */
@@ -97,143 +130,91 @@
       btn.setAttribute("aria-selected", String(selected));
       btn.tabIndex = selected ? 0 : -1;
     });
-
     tabPanels.forEach(function (panel) {
-      var isTarget = panel.id === button.getAttribute("aria-controls");
-      panel.classList.toggle("is-active", isTarget);
-      if (isTarget) {
-        panel.removeAttribute("hidden");
-      } else {
-        panel.setAttribute("hidden", "");
-      }
+      panel.hidden = panel.id !== button.getAttribute("aria-controls");
     });
   }
 
   tabButtons.forEach(function (btn, i) {
-    btn.addEventListener("click", function () {
-      activateTab(btn);
-    });
-
+    btn.addEventListener("click", function () { activateTab(btn); });
     btn.addEventListener("keydown", function (e) {
-      var newIndex = null;
-      if (e.key === "ArrowRight") newIndex = (i + 1) % tabButtons.length;
-      if (e.key === "ArrowLeft") newIndex = (i - 1 + tabButtons.length) % tabButtons.length;
-      if (newIndex !== null) {
+      var next = null;
+      if (e.key === "ArrowRight") next = (i + 1) % tabButtons.length;
+      if (e.key === "ArrowLeft") next = (i - 1 + tabButtons.length) % tabButtons.length;
+      if (next !== null) {
         e.preventDefault();
-        tabButtons[newIndex].focus();
-        activateTab(tabButtons[newIndex]);
+        tabButtons[next].focus();
+        activateTab(tabButtons[next]);
       }
     });
   });
 
   /* ------------------------------------------------------------------ */
-  /* Review carousel — autoplay, pauses on hover/focus/reduced-motion    */
+  /* Review carousel — autoplay pauses on hover/focus/reduced motion     */
   /* ------------------------------------------------------------------ */
   var slides = Array.prototype.slice.call(document.querySelectorAll(".review-slide"));
   var dotsWrap = document.getElementById("reviewDots");
-  var prevBtn = document.getElementById("reviewPrev");
-  var nextBtn = document.getElementById("reviewNext");
   var current = 0;
   var timer = null;
-  var AUTOPLAY_MS = 6000;
+  var AUTOPLAY_MS = 7000;
 
   slides.forEach(function (_, i) {
     var dot = document.createElement("button");
+    dot.type = "button";
     dot.className = "review-dot";
-    dot.setAttribute("role", "tab");
     dot.setAttribute("aria-label", "Show review " + (i + 1));
     dot.setAttribute("aria-current", i === 0 ? "true" : "false");
-    dot.addEventListener("click", function () {
-      goTo(i);
-      restartAutoplay();
-    });
+    dot.addEventListener("click", function () { goTo(i); restartAutoplay(); });
     dotsWrap.appendChild(dot);
   });
-
   var dots = Array.prototype.slice.call(dotsWrap.children);
 
   function goTo(index) {
     slides[current].classList.remove("is-active");
-    slides[current].setAttribute("hidden", "");
+    slides[current].hidden = true;
     dots[current].setAttribute("aria-current", "false");
-
     current = (index + slides.length) % slides.length;
-
-    slides[current].removeAttribute("hidden");
-    // force reflow so the transition replays
+    slides[current].hidden = false;
     void slides[current].offsetWidth;
     slides[current].classList.add("is-active");
     dots[current].setAttribute("aria-current", "true");
   }
 
+  function stopAutoplay() { if (timer) { window.clearInterval(timer); timer = null; } }
   function startAutoplay() {
     if (reduceMotion) return;
     stopAutoplay();
-    timer = window.setInterval(function () {
-      goTo(current + 1);
-    }, AUTOPLAY_MS);
+    timer = window.setInterval(function () { goTo(current + 1); }, AUTOPLAY_MS);
   }
+  function restartAutoplay() { stopAutoplay(); startAutoplay(); }
 
-  function stopAutoplay() {
-    if (timer) {
-      window.clearInterval(timer);
-      timer = null;
-    }
-  }
-
-  function restartAutoplay() {
-    stopAutoplay();
-    startAutoplay();
-  }
-
-  prevBtn.addEventListener("click", function () {
-    goTo(current - 1);
-    restartAutoplay();
-  });
-
-  nextBtn.addEventListener("click", function () {
-    goTo(current + 1);
-    restartAutoplay();
-  });
+  document.getElementById("reviewPrev").addEventListener("click", function () { goTo(current - 1); restartAutoplay(); });
+  document.getElementById("reviewNext").addEventListener("click", function () { goTo(current + 1); restartAutoplay(); });
 
   var carousel = document.querySelector(".review-carousel");
-  ["mouseenter", "focusin"].forEach(function (evt) {
-    carousel.addEventListener(evt, stopAutoplay);
-  });
-  ["mouseleave", "focusout"].forEach(function (evt) {
-    carousel.addEventListener(evt, startAutoplay);
-  });
-
+  ["mouseenter", "focusin"].forEach(function (evt) { carousel.addEventListener(evt, stopAutoplay); });
+  ["mouseleave", "focusout"].forEach(function (evt) { carousel.addEventListener(evt, startAutoplay); });
   document.addEventListener("visibilitychange", function () {
-    if (document.hidden) {
-      stopAutoplay();
-    } else {
-      startAutoplay();
-    }
+    if (document.hidden) stopAutoplay(); else startAutoplay();
   });
-
   startAutoplay();
 
   /* ------------------------------------------------------------------ */
   /* Footer year                                                         */
   /* ------------------------------------------------------------------ */
   var yearEl = document.getElementById("year");
-  if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
-  }
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   /* ------------------------------------------------------------------ */
   /* Square booking link placeholder notice                              */
+  /* Delete this block once every .js-square-link has a real Square URL. */
   /* ------------------------------------------------------------------ */
-  var squareLinks = Array.prototype.slice.call(document.querySelectorAll(".js-square-link"));
-  squareLinks.forEach(function (link) {
+  document.querySelectorAll(".js-square-link").forEach(function (link) {
     link.addEventListener("click", function (e) {
       if (link.getAttribute("href") === "#") {
         e.preventDefault();
         var label = link.getAttribute("data-square-label") || "booking";
-        window.alert(
-          "Online " + label + " isn't connected yet. Once you have the matching Square Appointments link, add it to this button's href in index.html."
-        );
+        window.alert("Online " + label + " isn't connected yet. Add the Square Appointments link to this button's href in index.html.");
       }
     });
   });
